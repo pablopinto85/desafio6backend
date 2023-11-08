@@ -107,7 +107,7 @@ function createHash(password) {
 }
 
 
-const strategySignup = new LocalStrategy({
+const strategyRegister = new LocalStrategy({
     
     passReqToCallback: true
 }, async (req, username, password, callbackDone) => {
@@ -135,7 +135,7 @@ const strategySignup = new LocalStrategy({
 });
 
 passport.use('login', strategyLogin);
-passport.use('signup', strategySignup);
+passport.use('register', strategyRegister);
 
 passport.serializeUser((user, callbackDone) => {
     console.log(`serializeUser`);
@@ -170,13 +170,13 @@ app.post('/login', passport.authenticate('login', {
     failureFlash: true  
 }));
 
-app.get('/signup', (req, res) => {
-    return res.render('signup', { message: req.flash('error') }) 
+app.get('/register', (req, res) => {
+    return res.render('register', { message: req.flash('error') }) 
 });
 
-app.post('/signup', passport.authenticate('signup', {
+app.post('/register', passport.authenticate('register', {
     successRedirect: '/welcome', 
-    failureRedirect: '/signuperror', 
+    failureRedirect: '/registererror', 
     failureFlash: true 
 }));
 
